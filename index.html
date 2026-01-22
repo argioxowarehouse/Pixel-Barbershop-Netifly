@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pixel Barbershop - Gaya Klasik, Sentuhan Modern</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Flaticon UIcons CDN -->
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-brands/css/uicons-brands.css'>
+
+    <style>
+      html {
+        scroll-padding-top: 80px;
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+      }
+      i.fi {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      section, footer, div[class*="absolute"] {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        outline: 1px solid transparent;
+        backface-visibility: hidden;
+      }
+
+      /* Entrance Animations for First Load */
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-30px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .animate-fade-in-up { 
+        opacity: 0;
+        animation: fadeInUp 1s cubic-bezier(0.22, 1, 0.36, 1) forwards; 
+      }
+      .animate-fade-in-down { 
+        opacity: 0;
+        animation: fadeInDown 1s cubic-bezier(0.22, 1, 0.36, 1) forwards; 
+      }
+
+      /* --- Varied Scroll Reveal Classes --- */
+      
+      /* Base Style */
+      [class*="reveal-"] {
+        opacity: 0;
+        transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: transform, opacity;
+      }
+
+      /* Reveal Types */
+      .reveal-up { transform: translateY(50px); }
+      .reveal-down { transform: translateY(-50px); }
+      .reveal-left { transform: translateX(-60px); }
+      .reveal-right { transform: translateX(60px); }
+      .reveal-zoom { transform: scale(0.9); }
+      
+      /* Active State */
+      .reveal-active {
+        opacity: 1 !important;
+        transform: translate(0) scale(1) !important;
+      }
+
+      /* Staggered Delays for Children */
+      .stagger-children > * { opacity: 0; transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+      .stagger-active > *:nth-child(1) { transition-delay: 100ms; opacity: 1; transform: none; }
+      .stagger-active > *:nth-child(2) { transition-delay: 250ms; opacity: 1; transform: none; }
+      .stagger-active > *:nth-child(3) { transition-delay: 400ms; opacity: 1; transform: none; }
+      .stagger-active > *:nth-child(4) { transition-delay: 550ms; opacity: 1; transform: none; }
+      .stagger-active > *:nth-child(5) { transition-delay: 700ms; opacity: 1; transform: none; }
+      .stagger-active > *:nth-child(6) { transition-delay: 850ms; opacity: 1; transform: none; }
+    </style>
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const observerOptions = {
+          threshold: 0.15,
+          rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('reveal-active');
+              if (entry.target.classList.contains('stagger-container')) {
+                entry.target.classList.add('stagger-active');
+              }
+            }
+          });
+        }, observerOptions);
+
+        const observeElements = () => {
+          const elements = document.querySelectorAll('[class*="reveal-"], .stagger-container');
+          elements.forEach(el => observer.observe(el));
+        };
+
+        observeElements();
+        const mutationObserver = new MutationObserver(observeElements);
+        mutationObserver.observe(document.body, { childList: true, subtree: true });
+      });
+    </script>
+
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@^2.48.1",
+    "react-easy-crop": "https://esm.sh/react-easy-crop@^5.2.0",
+    "browser-image-compression": "https://esm.sh/browser-image-compression@^2.0.2"
+  }
+}
+</script>
+</head>
+  <body class="bg-gray-50 text-gray-900 antialiased">
+    <div id="root"></div>
+  </body>
+</html>
